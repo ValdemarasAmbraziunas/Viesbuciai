@@ -1,0 +1,45 @@
+﻿
+@model IEnumerable<ITPPro.ViewModels.LookUpJobOffers>
+
+<h2>Mano darbo pasiūlymai</h2>
+@{
+    ViewBag.Title = "Mano darbo pasiūlymai";
+    int page = (int)ViewData["page"];
+    int items = (int)ViewData["items"];
+
+}
+
+
+<table class="table table-striped" id="jobOffers-table">
+    <tr>
+        <th style="display:none;"></th>
+        <th>@Html.DisplayNameFor(model => model.Job)</th>
+        <th>@Html.DisplayNameFor(model => model.HotelNet)</th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr class="data-item">
+            <td style="display:none;">@Html.DisplayFor(modelItem => item.id)</td>
+            <td>@Html.DisplayFor(modelItem => item.Job)</td>
+            <td>@Html.DisplayFor(modelItem => item.HotelNet)</td>
+        </tr>
+    }
+</table>
+
+<p style="text-align:center;">
+    @Html.ActionLink("Ankstesnis", "Darbo_poziciju_langas", "Darbo_pozicijos_patvirtinimo",
+            routeValues: new { page = page - 1, items = items }, htmlAttributes: new { })
+    |
+    @Html.ActionLink("Kitas", "Darbo_poziciju_langas", "Darbo_pozicijos_patvirtinimo",
+            routeValues: new { page = page + 1, items = items }, htmlAttributes: new { })
+</p>
+
+<script>
+    $('#jobOffers-table tr.data-item').click(function (e) {
+        var idCell = $(e.currentTarget.cells[0]);
+        var id = idCell.text();
+        var url = "@Url.Action("Darbo_pozicijos_patvirtinimo_langas", "Darbo_pozicijos_patvirtinimo")" + '/' + id;
+        document.location = url;
+    });
+</script>

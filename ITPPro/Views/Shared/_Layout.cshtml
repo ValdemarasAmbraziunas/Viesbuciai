@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Viešbučių rezervavimas</title>
+    @Styles.Render("~/Content/css")
+
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("scripts", required: false)
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Viešbučių rezervavimas", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            @{ 
+                string userEmail = User.Identity.IsAuthenticated ?
+                    (User as ITPPro.Security.CustomPrincipal) != null ? (User as ITPPro.Security.CustomPrincipal).Identity.Name : "Guest" : "Guest";
+                bool isOwner = User.Identity.IsAuthenticated ?
+                    (User as ITPPro.Security.CustomPrincipal) != null ? (User as ITPPro.Security.CustomPrincipal).IsInRole("Valdytojas") : false : false;
+                bool isAccountant = User.Identity.IsAuthenticated ?
+                   (User as ITPPro.Security.CustomPrincipal) != null ? (User as ITPPro.Security.CustomPrincipal).IsInRole("Buhalteris") : false : false;
+                bool isManager = User.Identity.IsAuthenticated ?
+                   (User as ITPPro.Security.CustomPrincipal) != null ? (User as ITPPro.Security.CustomPrincipal).IsInRole("Vadybininkas") : false : false;
+                
+            }
+            <div class="navbar-collapse collapse">
+                
+                @using Microsoft.AspNet.Identity 
+                <!--Cia valdytojas-->
+                @if (User.Identity.IsAuthenticated && isOwner)
+                {
+                    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        <ul class="nav navbar-nav pull-right">
+                            <li>
+                                @Html.ActionLink("Sistemos klientai", "Sistemos_klientu_langas", "Darbuotojo_roles_paskyrimo")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Mano darbuotojai", "Viesbucio_tinklo_darbuotoju_langas", "Darbuotoju_teisiu_priskyrimo")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Mano viešbučiai", "HotelModelList", "Viesbucio_registracijos")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Sveiki " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                            </li>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Atsijungti</a></li>
+                        </ul>
+                    }
+                }
+                //cia buhalteris
+                else if (User.Identity.IsAuthenticated && isAccountant)
+                {
+                    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                    <ul class="nav navbar-nav pull-right">                    
+                        <li>
+                            @Html.ActionLink("Sveiki " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                        </li>
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Atsijungti</a></li>
+                    </ul>
+                    }
+                }
+                //Cia vadybininkas
+                else if (User.Identity.IsAuthenticated && isManager)
+                {
+                    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                    <ul class="nav navbar-nav pull-right">
+                        <li>
+                            @Html.ActionLink("Sistemos klientai", "Sistemos_klientu_langas", "Kliento_veiksmu_apribojimo")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Viešbučių administravimas", "Viesbuciu_langas", "Viesbucio_administravimo")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Sveiki " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                        </li>
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Atsijungti</a></li>
+                    </ul>
+                    }
+                }
+                //Cia klientas
+                else if (User.Identity.IsAuthenticated)
+                {
+                    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                    <ul class="nav navbar-nav pull-right">
+                        <li>
+                            @Html.ActionLink("Darbo pasiūlymai", "Darbo_poziciju_langas", "Darbo_pozicijos_patvirtinimo")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Sveiki " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                        </li>
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Atsijungti</a></li>
+                    </ul>
+                    }
+                }
+                //Cia neprisijungus
+                else
+                {
+                <ul class="nav navbar-nav pull-right">
+                    <li>
+                        @Html.ActionLink("Prisijungti", "Login", "Account")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Kliento registracija", "Register", "Account")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Valdytojo registracija", "Register", "Valdytojo_registracijos")
+                    </li>
+                </ul>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+</body>
+</html>

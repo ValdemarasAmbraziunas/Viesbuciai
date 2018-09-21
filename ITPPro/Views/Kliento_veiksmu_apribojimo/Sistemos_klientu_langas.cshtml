@@ -1,0 +1,53 @@
+﻿
+@model IEnumerable<ITPPro.ViewModels.ClientsViewModel>
+
+<h2>Sistemos klientai</h2>
+@{
+    ViewBag.Title = "Sistemos klientai";
+    int page = (int)ViewData["page"];
+    int items = (int)ViewData["items"];
+
+}
+
+
+<table class="table table-striped" id="clients-table">
+    <tr>
+        <th style="display:none;"></th>
+        <th>@Html.DisplayNameFor(model => model.Name)</th>
+        <th>@Html.DisplayNameFor(model => model.Surname)</th>
+        <th>@Html.DisplayNameFor(model => model.Email)</th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr class="data-item">
+            <td style="display:none;">@Html.DisplayFor(modelItem => item.id)</td>
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.Surname)</td>
+            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+        </tr>
+    }
+</table>
+
+<p style="text-align:center;">
+    @Html.ActionLink("Ankstesnis", "Sistemos_klientu_langas", "Kliento_veiksmu_apribojimo",
+            routeValues: new { page = page - 1, items = items }, htmlAttributes: new { })
+    |
+    @Html.ActionLink("Kitas", "Sistemos_klientu_langas", "Kliento_veiksmu_apribojimo",
+            routeValues: new { page = page + 1, items = items }, htmlAttributes: new { })
+</p>
+
+<script>
+    $('#clients-table tr.data-item').click(function (e) {
+        var idCell = $(e.currentTarget.cells[0]);
+        var id = idCell.text();
+        var url = "@Url.Action("Kliento_informacijos_langas", "Kliento_veiksmu_apribojimo")" + '/' + id;
+        document.location = url;
+    });
+
+    $('#clients-table tr.data-item').hover(function (e) {
+        $(e.currentTarget).addClass('hover');
+    }, function (e) {
+        $(e.currentTarget).removeClass('hover');
+    });
+</script>

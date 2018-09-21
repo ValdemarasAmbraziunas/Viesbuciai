@@ -1,0 +1,62 @@
+﻿@model ITPPro.ViewModels.ClientsViewModel
+@{
+    ViewBag.Title = "Kliento informacijos langas";
+    int cid = Model.id;
+}
+
+<h2>Kliento informacijos langas</h2>
+
+
+<table class="table table-striped" id="clients-table">
+    <tr class="data-item">
+        <td style="display:none;">@Html.DisplayFor(model => model.id)</td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Name) :
+            @Html.DisplayFor(model => model.Name)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Surname) :
+            @Html.DisplayFor(model => model.Surname)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Email) :
+            @Html.DisplayFor(model => model.Email)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Phone) :
+            @Html.DisplayFor(model => model.Phone)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Address) :
+            @Html.DisplayFor(model => model.Address)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Gender) :
+            @Html.DisplayFor(model => model.Gender)
+        </td>
+    </tr>
+
+
+</table>
+<br />
+<br />
+@if (!Model.isRestricted)
+{
+    <button class="btn btn-success" onclick="document.location='@Url.Action("Kliento_teisiu_apribojimo_langas", "Kliento_veiksmu_apribojimo",new { clientid = cid  })';">Apriboti veiksmus</button>
+}
+else
+{
+        <h5>Šio vartotojo teisės jūsų viešbučių tinkle jau apribotos</h5>
+}

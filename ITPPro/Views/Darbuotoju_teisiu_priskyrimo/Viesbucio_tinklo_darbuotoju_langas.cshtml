@@ -1,0 +1,55 @@
+﻿
+@model IEnumerable<ITPPro.ViewModels.EmpViewModel>
+
+<h2>Sistemos klientai</h2>
+@{
+    ViewBag.Title = "Viesbucio tinklo darbuotojai";
+    int page = (int)ViewData["page"];
+    int items = (int)ViewData["items"];
+
+}
+
+
+<table class="table table-striped" id="empl-table">
+    <tr>
+        <th style="display:none;"></th>
+        <th>@Html.DisplayNameFor(model => model.Name)</th>
+        <th>@Html.DisplayNameFor(model => model.Surname)</th>
+        <th>@Html.DisplayNameFor(model => model.Email)</th>
+        <th>@Html.DisplayNameFor(model => model.Phone)</th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr class="data-item">
+            <td style="display:none;">@Html.DisplayFor(modelItem => item.id)</td>
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.Surname)</td>
+            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+            <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+        </tr>
+    }
+</table>
+
+<p style="text-align:center;">
+    @Html.ActionLink("Ankstesnis", "Viesbucio_tinklo_darbuotoju_langas", "Darbuotoju_teisiu_priskyrimo",
+            routeValues: new { page = page - 1, items = items }, htmlAttributes: new { })
+    |
+    @Html.ActionLink("Kitas", "Viesbucio_tinklo_darbuotoju_langas", "Darbuotoju_teisiu_priskyrimo",
+            routeValues: new { page = page + 1, items = items }, htmlAttributes: new { })
+</p>
+
+<script>
+    $('#empl-table tr.data-item').click(function (e) {
+        var idCell = $(e.currentTarget.cells[0]);
+        var id = idCell.text();
+        var url = "@Url.Action("Darbuotojo_informacijos_langas", "Darbuotoju_teisiu_priskyrimo")" + '/' + id;
+        document.location = url;
+    });
+
+    $('#empl-table tr.data-item').hover(function (e) {
+        $(e.currentTarget).addClass('hover');
+    }, function (e) {
+        $(e.currentTarget).removeClass('hover');
+    });
+</script>

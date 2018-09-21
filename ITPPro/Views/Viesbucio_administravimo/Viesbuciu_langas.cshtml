@@ -1,0 +1,56 @@
+﻿
+@model ITPPro.ViewModels.HotelsViewModel
+
+<h2>Mano viešbučių langas</h2>
+@{
+    ViewBag.Title = "Mano viešbučiai";
+    int page = (int)ViewData["page"];
+    int items = (int)ViewData["items"];
+
+}
+
+
+<table class="table table-striped" id="hotels-table">
+    <tr>
+        <th style="display:none;"></th>
+        <th>@Html.DisplayNameFor(model => model.Title)</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.hotels)
+    {
+        <tr class="data-item">
+            <td style="display:none;">@Html.DisplayFor(modelItem => item.id)</td>
+            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+            <td>
+                @if (item.Rights)
+                {
+                    using (Html.BeginForm("Viesbucio_informacijos_langas", "Viesbucio_administravimo", new { id = item.id }, FormMethod.Get))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Peržiūrėti" class="btn btn-danger" />
+                    }
+                }
+                else
+                {
+                    <p>Jūsų teisės išjungtos</p>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+<p style="text-align:center;">
+    @Html.ActionLink("Ankstesnis", "Viesbuciu_langas", "Viesbucio_administravimo",
+            routeValues: new { page = page - 1, items = items }, htmlAttributes: new { })
+    |
+    @Html.ActionLink("Kitas", "Viesbuciu_langas", "Viesbucio_administravimo",
+            routeValues: new { page = page + 1, items = items }, htmlAttributes: new { })
+</p>
+
+<script>
+    $('#hotels-table tr.data-item').hover(function (e) {
+        $(e.currentTarget).addClass('hover');
+    }, function (e) {
+        $(e.currentTarget).removeClass('hover');
+    });
+</script>

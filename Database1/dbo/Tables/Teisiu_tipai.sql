@@ -1,0 +1,6 @@
+﻿CREATE TABLE dbo.TEISIU_TIPAI
+(
+	id int IDENTITY (1, 1) NOT NULL,
+	name char (10) NOT NULL,
+	PRIMARY KEY(id)
+);

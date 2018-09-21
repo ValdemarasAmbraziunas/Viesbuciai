@@ -1,0 +1,38 @@
+﻿
+@model ITPPro.ViewModels.RoomsReportResultsViewModel
+
+<h2>Kambarių užimtumo ataskaita</h2>
+@{
+    ViewBag.Title = "Kambarių užimtumo ataskaita";
+
+}
+
+<h2>@Model.Title</h2>
+
+<br/>
+<p>@Model.StartTime</p>
+<p>@Model.EndTime</p>
+
+<br/>
+
+<table class="table table-striped" id="rooms-table">
+    <tr>
+        <th>Numeris</th>
+        <th>Užimtumas</th>
+    </tr>
+    @foreach (var item in Model.results)
+    {
+        <tr class="data-item">
+            <td>@Html.DisplayFor(modelItem => item.Number)</td>
+            <td>@Html.DisplayFor(modelItem => item.Busyness)</td>
+        </tr>
+    }
+</table>
+
+<script>
+    $('#rooms-table tr.data-item').hover(function (e) {
+        $(e.currentTarget).addClass('hover');
+    }, function (e) {
+        $(e.currentTarget).removeClass('hover');
+    });
+</script>

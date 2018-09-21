@@ -1,0 +1,69 @@
+﻿@model ITPPro.ViewModels.EmpViewModel
+@{
+    ViewBag.Title = "Darbuotojo informacijos langas";
+    int cid = Model.id;
+}
+
+<h2>Kliento informacijos langas</h2>
+
+
+<table class="table table-striped" id="empl-table">
+    <tr class="data-item">
+        <td style="display:none;">@Html.DisplayFor(model => model.id)</td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Name) :
+            @Html.DisplayFor(model => model.Name)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Surname) :
+            @Html.DisplayFor(model => model.Surname)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Email) :
+            @Html.DisplayFor(model => model.Email)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Phone) :
+            @Html.DisplayFor(model => model.Phone)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Address) :
+            @Html.DisplayFor(model => model.Address)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Gender) :
+            @Html.DisplayFor(model => model.Gender)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Role) :
+            @Html.DisplayFor(model => model.Role)
+        </td>
+    </tr>
+
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.StartTime) :
+            @Html.DisplayFor(model => model.StartTime)
+        </td>
+    </tr>
+
+
+
+</table>
+<br />
+<br />
+<button class="btn btn-success" onclick="document.location='@Url.Action("Darbuotojo_teisiu_keitimo_langas", "Darbuotoju_teisiu_priskyrimo",new { emplid = cid  })';">Keisti teises</button>

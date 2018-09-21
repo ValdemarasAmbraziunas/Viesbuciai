@@ -1,0 +1,163 @@
+﻿@model ITPPro.ViewModels.HotelsViewModel
+@{
+    ViewBag.Title = "Viešbučio informacijos langas";
+    int hid = Model.id;
+}
+
+<h2>Viešbučio informacijos langas</h2>
+<br/>
+
+<table class="table table-striped" id="empl-table">
+    <tr class="data-item">
+        <td style="display:none;">@Html.DisplayFor(model => model.id)</td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Title) :
+            @Html.DisplayFor(model => model.Title)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.HotelsNet) :
+            @Html.DisplayFor(model => model.HotelsNet)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Stars) :
+            @Html.DisplayFor(model => model.Stars)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.City) :
+            @Html.DisplayFor(model => model.City)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Address) :
+            @Html.DisplayFor(model => model.Address)
+        </td>
+    </tr>
+    <tr class="data-item">
+        <td>
+            @Html.DisplayNameFor(model => model.Description) :
+            @Html.DisplayFor(model => model.Description)
+        </td>
+    </tr>
+
+</table>
+
+<br />
+<br />
+
+<button class="btn btn-success" onclick="document.location='@Url.Action("Kambariu_uzimtumo_ataskaitos_langas", "Viesbucio_administravimo",new { hotelid = hid  })';">Sudaryti užimtumo ataskaitą</button>
+
+<br />
+<br />
+
+
+<h3>Viešbučio kambariai</h3>
+<br/>
+<table class="table table-striped" id="rooms-table">
+    <tr>
+        <th style="display:none;"></th>
+        <th>@Html.DisplayNameFor(model => model.RoomsTitle.Number)</th>
+        <th>@Html.DisplayNameFor(model => model.RoomsTitle.Capacity)</th>
+        <th>@Html.DisplayNameFor(model => model.RoomsTitle.Price)</th>
+        <th>@Html.DisplayNameFor(model => model.RoomsTitle.Description)</th>
+        <th>@Html.DisplayNameFor(model => model.RoomsTitle.Type)</th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Rooms)
+    {
+        <tr class="data-item">
+            <td style="display:none;">@Html.DisplayFor(modelItem => item.id)</td>
+            <td>@Html.DisplayFor(modelItem => item.Number)</td>
+            <td>@Html.DisplayFor(modelItem => item.Capacity)</td>
+            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+            <td>@Html.DisplayFor(modelItem => item.Type)</td>
+            <td>
+                    @using (Html.BeginForm("Kambario_informacijos_keitimo_langas", "Viesbucio_administravimo", new { id = item.id, hotelid = hid }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Keisti" class="btn btn-danger" />
+                    }
+            </td>
+            <td>
+                @using (Html.BeginForm("DeleteRoom", "Viesbucio_administravimo", new { id = item.id, hotelid = hid }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Naikinti" class="btn btn-danger" />
+                }
+            </td>
+
+        </tr>
+    }
+</table>
+
+<br />
+<br />
+
+<button class="btn btn-success" onclick="document.location='@Url.Action("Kambario_kurimo_langas", "Viesbucio_administravimo",new { hotelid = hid  })';">Sukurti naują kambarį</button>
+
+<br />
+<br />
+
+<h3>Viešbučio papildomos paslaugos</h3>
+<br />
+<table class="table table-striped" id="services-table">
+    <tr>
+        <th style="display:none;"></th>
+        <th>@Html.DisplayNameFor(model => model.ServicesTitle.Description)</th>
+        <th>@Html.DisplayNameFor(model => model.ServicesTitle.Price)</th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Services)
+    {
+        <tr class="data-item">
+            <td style="display:none;">@Html.DisplayFor(modelItem => item.id)</td>
+            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+            <td>
+                @using (Html.BeginForm("Paslaugos_informacijos_keitimo_langas", "Viesbucio_administravimo", new { id = item.id, hotelid = hid }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Keisti" class="btn btn-danger" />
+                }
+            </td>
+            <td>
+                @using (Html.BeginForm("DeleteService", "Viesbucio_administravimo", new { id = item.id, hotelid = hid }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Naikinti" class="btn btn-danger" />
+                }
+            </td>
+
+        </tr>
+    }
+</table>
+
+<br />
+<br />
+
+<button class="btn btn-success" onclick="document.location='@Url.Action("Paslaugos_kurimo_langas", "Viesbucio_administravimo",new { hotelid = hid  })';">Sukurti naują paslaugą</button>
+
+
+<script>
+    $('#rooms-table tr.data-item').hover(function (e) {
+        $(e.currentTarget).addClass('hover');
+    }, function (e) {
+        $(e.currentTarget).removeClass('hover');
+        });
+    $('#services-table tr.data-item').hover(function (e) {
+        $(e.currentTarget).addClass('hover');
+    }, function (e) {
+        $(e.currentTarget).removeClass('hover');
+    });
+</script>

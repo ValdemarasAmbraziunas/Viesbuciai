@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ITPPro.ViewModels.EmplRightsViewModel>
+
+@{
+    ViewBag.Title = "Darbuotojo teisių keitimas";
+    int cid = (int)ViewData["code"];
+}
+@{
+    ViewBag.Title = "Darbuotojo teisių keitimo langas";
+}
+
+<h2>Darbuotojo teisių keitimo langas</h2>
+
+<table class="table table-striped" id="rights-table">
+    <tr>
+        <th style="display:none;"></th>
+        <th>@Html.DisplayNameFor(model => model.Hotel)</th>
+        <th>@Html.DisplayNameFor(model => model.RightsStatus)</th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr class="data-item">
+            <td style="display:none;">@Html.DisplayFor(modelItem => item.id)</td>
+            <td>@Html.DisplayFor(modelItem => item.Hotel)</td>
+            <td>@Html.DisplayFor(modelItem => item.RightsStatus)</td>
+        </tr>
+    }
+</table>
+
+<script>
+    $('#rights-table tr.data-item').click(function (e) {
+        var idCell = $(e.currentTarget.cells[0]);
+        var id = idCell.text();
+        var url = "@Url.Action("Change", "Darbuotoju_teisiu_priskyrimo")" + '/?id=' + id + '&eid=' + @cid;
+        document.location = url;
+    });
+
+    $('#rights-table tr.data-item').hover(function (e) {
+        $(e.currentTarget).addClass('hover');
+    }, function (e) {
+        $(e.currentTarget).removeClass('hover');
+    });
+</script>
+
+

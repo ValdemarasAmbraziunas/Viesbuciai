@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="0d98d73e-4ca4-4c9c-bc2c-7e58518c28c9" ChangeDateTime="12/12/2017 22:42:37">
+    <Property Name="ElementName" Value="[dbo].[PAPILDOMOS_PASLAUGOS].[paslaugos_suteikimo_data]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PAPILDOMOS_PASLAUGOS]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="kaina" />
+  </Operation>
+</Operations>

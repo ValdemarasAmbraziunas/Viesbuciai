@@ -1,0 +1,64 @@
+﻿
+@model IEnumerable<ITPPro.ViewModels.HotelsViewModel>
+<h2>Mano viešbučių langas</h2>
+@{
+    ViewBag.Title = "Mano viešbučiai";
+    int page = (int)ViewData["page"];
+    int items = (int)ViewData["items"];
+    string error = (string)ViewData["error"];
+
+}
+@if(error != null)
+{
+    <p>@error</p>
+}
+
+<button class="btn btn-success" onclick="document.location='@Url.Action("RegisterHotel", "Viesbucio_registracijos")';">Naujas viešbutis</button>
+<br />
+<br />
+
+<table class="table table-striped" id="hotels-table">
+    <tr>
+        <th style="display:none;"></th>
+        <th>@Html.DisplayNameFor(model => model.Title)</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr class="data-item">
+            <td style="display:none;">@Html.DisplayFor(modelItem => item.id)</td>
+            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+            <td>
+                @using (Html.BeginForm("DeleteHotel", "Viesbucio_registracijos", new { id = item.id }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Ištrinti" class="btn btn-danger" />
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+<p style="text-align:center;">
+    @Html.ActionLink("Ankstesnis", "HotelModelList", "Viesbucio_registracijos",
+            routeValues: new { page = page - 1, items = items }, htmlAttributes: new { })
+    |
+    @Html.ActionLink("Kitas", "HotelModelList", "Viesbucio_registracijos",
+            routeValues: new { page = page + 1, items = items }, htmlAttributes: new { })
+</p>
+
+<script>
+
+    $('#hotels-table tr.data-item').click(function (e) {
+        var idCell = $(e.currentTarget.cells[0]);
+        var id = idCell.text();
+        var url = "@Url.Action("ViewInfo", "Viesbucio_registracijos")" + '/' + id;
+        document.location = url;
+    });
+
+    $('#hotels-table tr.data-item').hover(function (e) {
+        $(e.currentTarget).addClass('hover');
+    }, function (e) {
+        $(e.currentTarget).removeClass('hover');
+    });
+</script>

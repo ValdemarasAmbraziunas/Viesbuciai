@@ -1,0 +1,6 @@
+﻿CREATE TABLE dbo.KAMBARIO_TIPAI
+(
+	id int IDENTITY (1, 1) NOT NULL,
+	name char (13) NOT NULL,
+	PRIMARY KEY(id)
+);

@@ -1,0 +1,6 @@
+﻿CREATE TABLE dbo.MOKEJIMO_TIPAI
+(
+	id int IDENTITY (1, 1) NOT NULL,
+	name char (12) NOT NULL,
+	PRIMARY KEY(id)
+);
